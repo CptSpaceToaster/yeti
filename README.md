@@ -18,7 +18,7 @@ Example `cfg.ini`
 [Credentials]
 email: YourEmail@yourdomain.com
 uname: YourUsername
-ps:    YourPassword
+pw:    YourPassword
 ```
 
 ##Running

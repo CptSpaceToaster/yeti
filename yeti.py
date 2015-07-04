@@ -114,4 +114,5 @@ if __name__ == "__main__":
     jabber = ChatBot()
     while True:
         jabber.do_chat()
-        time.sleep(1)
+        # Rate Limit
+        time.sleep(5)
