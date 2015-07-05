@@ -3,15 +3,15 @@ import time
 import random
 import configparser
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import NoSuchElementException
 
 driver = webdriver.Firefox()
 config = configparser.ConfigParser()
 
+
 class ChatMessage:
     def __init__(self, element):
-        date = element.find_element_by_class_name("chatMessage-time").get_attribute("title")
+        date = element.find_element_by_class_name("chatMessage-time") \
+            .get_attribute("title")
         date += element.find_element_by_class_name("chatMessage-time").text
         self.stamp = time.mktime(time.strptime(date, "%A, %B %d, %Y[%H:%M]"))
 
@@ -21,16 +21,19 @@ class ChatMessage:
             self.text = elems[1].text
         else:
             self.text = elems[0].text
-            self.user = element.find_element_by_class_name("chatMessage-nickname").text
+            self.user = element.find_element_by_class_name("chatMessage \
+                    -nickname").text
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            return self.stamp == other.stamp and self.user == other.user and self.text == other.text
+            return self.stamp == other.stamp and self.user == other.user \
+                and self.text == other.text
         else:
             return False
 
     def __ne__(self, other):
         return not self.__eq__(other)
+
 
 class ChatBot:
     def __init__(self):
@@ -44,12 +47,12 @@ class ChatBot:
         global driver
         global config
         self.last_msg = self.msg
-        self.msg = ChatMessage(driver.find_element_by_class_name("chatMessage-main"))
+        self.msg = ChatMessage(driver.find_element_by_class_name("chatMessage \
+            -main"))
 
         # prevent recursion
         if (self.msg.user == config.get("Credentials", "uname")):
             return
- 
         if (self.last_msg != self.msg):
             if (self.msg.stamp < self.epoch):
                 return
@@ -70,7 +73,8 @@ class ChatBot:
 
     def handle(self, cmd, args, n):
         if cmd == "help":
-            self.respond("Available commands: help, bot-say [TEXT], roll [NUM]")
+            self.respond("Available commands: help, bot-say [TEXT], \
+                    roll [NUM]")
         if cmd == "bot-say":
             self.respond(" ".join(args))
         if cmd == "roll":
@@ -88,6 +92,7 @@ class ChatBot:
         chat = driver.find_element_by_id("chat_input")
         chat.send_keys(text)
         chat.submit()
+
 
 def init():
     global driver
