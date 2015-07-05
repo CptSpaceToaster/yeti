@@ -1,8 +1,12 @@
 #!/usr/bin/python3.4
-import time
-import random
 import configparser
+import datetime
+import random
+import pytz
+import time
+from tzlocal import get_localzone
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 
 driver = webdriver.Firefox()
 config = configparser.ConfigParser()
@@ -10,10 +14,12 @@ config = configparser.ConfigParser()
 
 class ChatMessage:
     def __init__(self, element):
+        # Date Parser
         date = element.find_element_by_class_name("chatMessage-time") \
             .get_attribute("title")
         date += element.find_element_by_class_name("chatMessage-time").text
-        self.stamp = time.mktime(time.strptime(date, "%A, %B %d, %Y[%H:%M]"))
+        self.gmt_dt = datetime.datetime.strptime(date, "%A, %B %d, %Y[%H:%M]")
+        self.gmt_dt = pytz.timezone("GMT").localize(self.gmt_dt)
 
         elems = element.find_elements_by_class_name("chatMessage-text")
         if len(elems) > 1:
@@ -21,12 +27,12 @@ class ChatMessage:
             self.text = elems[1].text
         else:
             self.text = elems[0].text
-            self.user = element.find_element_by_class_name("chatMessage \
-                    -nickname").text
+            self.user = element.find_element_by_class_name(
+                "chatMessage-nickname").text
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            return self.stamp == other.stamp and self.user == other.user \
+            return self.gmt_dt == other.gmt_dt and self.user == other.user \
                 and self.text == other.text
         else:
             return False
@@ -39,25 +45,30 @@ class ChatBot:
     def __init__(self):
         self.msg = None
         self.last_msg = None
-        # Fudge factor for different timezones
-        self.epoch = time.time() + 14400
-        print("Initialized Chatbot")
+
+        log("Calculating Timezone")
+        self.tz = get_localzone()
+        self.local_dt = self.tz.localize(datetime.datetime.now())
+        # Send the bot back in time 1 minute, to detect lines on startup
+        self.local_dt -= datetime.timedelta(minutes=1)
+        self.gmt_dt = self.local_dt.astimezone(pytz.timezone("GMT"))
+        log("Initialized Chatbot")
 
     def do_chat(self):
         global driver
         global config
         self.last_msg = self.msg
-        self.msg = ChatMessage(driver.find_element_by_class_name("chatMessage \
-            -main"))
+        self.msg = ChatMessage(driver.find_element_by_class_name(
+            "chatMessage-main"))
 
         # prevent recursion
-        if (self.msg.user == config.get("Credentials", "uname")):
+        if self.msg.user == config.get("Credentials", "uname"):
             return
-        if (self.last_msg != self.msg):
-            if (self.msg.stamp < self.epoch):
+        if self.last_msg != self.msg:
+            if self.msg.gmt_dt < self.gmt_dt:
                 return
 
-            print(self.msg.user + " " + self.msg.text)
+            log(self.msg.user + " " + self.msg.text)
 
             if self.msg.text[0] == "!":
                 tokens = self.msg.text.split()
@@ -94,12 +105,16 @@ class ChatBot:
         chat.submit()
 
 
+def log(txt):
+    print(str("[" + time.strftime("%H:%M:%S")) + "] " + txt)
+
+
 def init():
     global driver
     global config
-    print("Reading Config")
+    log("Reading Config")
     config.read("cfg.ini")
-
+    log("Connecting to Initium")
     driver.get("http://www.playinitium.com")
 
     # Enter email
@@ -115,9 +130,20 @@ def init():
             button.click()
 
 if __name__ == "__main__":
-    init()
-    jabber = ChatBot()
-    while True:
-        jabber.do_chat()
-        # Rate Limit
-        time.sleep(5)
+    try:
+        init()
+        jabber = ChatBot()
+        while True:
+            try:
+                jabber.do_chat()
+                # Rate Limit
+            except NoSuchElementException:
+                # bot missed
+                log("Bot could not find chat entries")
+
+            time.sleep(5)
+
+    except KeyboardInterrupt:
+        print("")
+        log("Exiting")
+        exit(0)
