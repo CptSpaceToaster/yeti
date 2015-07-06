@@ -112,6 +112,7 @@ def log(txt):
 def init():
     global driver
     global config
+    # TODO: Error if config is missing
     log("Reading Config")
     config.read("cfg.ini")
     log("Connecting to Initium")
