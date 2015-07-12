@@ -1,0 +1,202 @@
+{
+    "Aera": {
+        "Artius_River": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4505781470756864",
+        "North_West_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6669355408424960",
+        "Town_Hall": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6650283874582528",
+        "Aera_Inn": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4676659160547328",
+        "Aera_Countryside": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5707702298738688"
+    },
+    "Aera_Countryside": {
+        "Wildeburn_Forest": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4645934038253568",
+        "Aera_Swamplands": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5722646637445120",
+        "Giant_Turtle": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5635874238758912",
+        "Northern_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6431438647853056",
+        "Aera": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5707702298738688"
+    },
+    "Aera_Swamplands": {
+        "Grand_Mountain": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5644406560391168",
+        "Aera_Countryside": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5722646637445120"
+    },
+    "Grand_Mountain": {
+        "Aera_Swamplands": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5644406560391168",
+        "Desert": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5710239819104256"
+    },
+    "Desert": {
+        "North_Mountain_Range": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6572424170569728",
+        "Grand_Mountain": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5710239819104256",
+        "Sand_Swept_Valley": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5996119351885824",
+        "Cliffside_Lookout": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5526968363646976"
+    },
+    "Sand_Swept_Valley": {
+        "Desert": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5996119351885824"
+    },
+    "North_Mountain_Range": {
+        "Black_Mountain": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6665253882429440",
+        "Desert": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6572424170569728"
+    },
+    "Black_Mountain": {
+        "North_Mountain_Range": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6665253882429440"
+    },
+    "Cliffside_Lookout": {
+        "Rocky_Path": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6057932252774400",
+        "Desert": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5526968363646976"
+    },
+    "Rocky_Path": {
+        "Mountain_Plains": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5531727355183104",
+        "Cliffside_Lookout": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6057932252774400"
+    },
+    "Mountain_Plains": {
+        "Rocky_Path": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5531727355183104",
+        "Hermit's_Cottage": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6329046694625280",
+        "Hobgoblin_Tribe_Campsite": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6447135008489472"
+    },
+    "Hobgoblin_Tribe_Campsite": {
+        "Mountain_Plains": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6447135008489472"
+    },
+    "Hermit's_Cottage": {
+        "Mountain_Plains": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6329046694625280",
+        "Hermit's_Dark_Basement": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5901814469754880"
+    },
+    "Hermit's_Dark_Basement": {
+        "Hermit's_Cottage": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5901814469754880",
+        "Marcusville": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6399892163395584"
+    },
+    "Marcusville": {
+        "Hermit's_Dark_Basement": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6399892163395584"
+    },
+    "Northern_Hills": {
+        "Great_Northern_Valley": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4896114809503744",
+        "Aera_Countryside": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6431438647853056"
+    },
+    "Great_Northern_Valley": {
+        "Northern_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4896114809503744",
+        "Abandoned_Castle": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5702240174080000"
+    },
+    "Abandoned_Castle:_Under_construction": {
+        "Outer_Gate": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6617033848389632",
+        "Great_Northern_Valley": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5702240174080000"
+    },
+    "Outer_Gate": {
+        "Abandoned_Castle:_Under_construction": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6617033848389632",
+        "Castle_Grounds": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5913575382056960"
+    },
+    "Castle_Grounds": {
+        "Outer_Gate": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5913575382056960",
+        "Outer_Wall_Walkway(South)": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5146290748915712"
+    },
+    "Outer_Wall_Walkway(South)": {
+        "Castle_Grounds": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5146290748915712"
+    },
+    "Wildeburn_Forest": {
+        "Aera_Countryside": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4645934038253568",
+        "Taelhollow_Swamp": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6507801555763200"
+    },
+    "Taelhollow_Swamp": {
+        "Wildeburn_Forest": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6507801555763200",
+        "Taelhollow_Hut": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4663561120907264"
+    },
+    "Taelhollow_Hut": {
+        "Taelhollow_Swamp": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4663561120907264"
+    },
+    "Aera_Inn": {
+        "Aera_Inn_Basement_-_North": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6531919743287296",
+        "Aera": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4676659160547328"
+    },
+    "Aera_Inn_Basement_-_North": {
+        "Aera_Inn_Basement_-_Middle": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6478276675502080",
+        "Aera_Inn": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6531919743287296"
+    },
+    "Aera_Inn_Basement_-_Middle": {
+        "Aera_Inn_Basement_-_North": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6478276675502080",
+        "Aera_Inn_Basement_-_South": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5706914172239872"
+    },
+    "Aera_Inn_Basement_-_South": {
+        "Aera_Inn_Basement_-_Middle": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5706914172239872"
+    },
+    "Artius_River": {
+        "Aera": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4505781470756864",
+        "Artius_Lane": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6713435731525632"
+    },
+    "Artius_Lane": {
+        "Arius_River": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6713435731525632",
+        "Misty Forest": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5632100405346304"
+    },
+    "Misty_Forest": {
+        "Artius_Lane": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5632100405346304",
+        "Misty_Mountain_Basin": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5714677862498304",
+        "Goblin_Camp": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5024958459674624"
+    },
+    "Misty_Mountain_Basin": {
+        "Misty_Forest": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5714677862498304",
+        "Misty_Cave_Entrance": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6517098549346304",
+        "Misty_Mountain_Pass": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4735734724427776"
+    },
+    "Misty_Mountain_Pass": {
+        "Misty_Mountain_Basin": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4735734724427776"
+    },
+    "Misty_Cave_Entrance": {
+        "Misty_Mountain_Basin": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6517098549346304"
+    },
+    "Goblin_Camp": {
+        "Misty_Forest": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5024958459674624",
+        "Goblin_Tent": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5120568458215424",
+        "Leader's_Quarters": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5710925403258880"
+    },
+    "Goblin_Tent": {
+        "Goblin_Camp": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5120568458215424"
+    },
+    "Leader's_Quarters": {
+        "Goblin_Camp": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5710925403258880",
+        "A_Letter_To_The_Misty_Forest_Goblin_Leader": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5604915309182976"
+    },
+    "A_Letter_To_The_Misty_Forest_Goblin_Leader": {
+        "Leader's_Quarters:": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5604915309182976"
+    },
+    "North_West_Hills": {
+        "Area": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6669355408424960",
+        "The_Fork": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5398765569572864",
+        "Canyonside_Plains": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5260299615600640",
+        "Baron_Crickton's_Lair": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5115156161888256"
+    },
+    "Baron_Cricketon's_Lair": {
+        "North_West_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5115156161888256"
+    },
+    "The_Fork": {
+        "North_West_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5398765569572864",
+        "High_Road": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6487503003451392",
+        "Spider_Cave_Cavern": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6178590701912064"
+    },
+    "High_Road": {
+        "North_West_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6487503003451392"
+    },
+    "Spider_Cave_Cavern": {
+        "North_West_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6178590701912064"
+    },
+    "Canyonside_Plains": {
+        "North_West_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5260299615600640",
+        "Sun_Baked_Canyon": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6191672031444992"
+    },
+    "Sun_Baked_Canyon": {
+        "Canyonside_Plains": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6191672031444992",
+        "Canyon_Cave_Entrance": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4948096899350528"
+    },
+    "Canyon_Cave_Entrance": {
+        "Sun_Baked_Canyon": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4948096899350528",
+        "Immense_Cavern": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5886715025686528"
+    },
+    "Immense_Cavern": {
+        "Canyon_Cave_Entrance": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5886715025686528",
+        "Claw_Marked_Crevice": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6282801204690944"
+    },
+    "Claw_Marked_Crevice": {
+        "Immense_Cavern": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6282801204690944",
+        "Drake_Cave": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6671164696952832"
+    },
+    "Drake_Cave": {
+        "Claw_Marked_Crevice": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6671164696952832",
+        "Charred_Cavern": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4840241949048832"
+    },
+    "Charred_Cavern": {
+        "Drake_Cave": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4840241949048832"
+    }
+}
