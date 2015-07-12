@@ -43,7 +43,6 @@ class ChatMessage:
 
 class ChatBot:
     def __init__(self):
-        self.msg = None
         self.last_msg = None
 
         log("Calculating Timezone")
@@ -57,21 +56,36 @@ class ChatBot:
     def do_chat(self):
         global driver
         global config
-        self.last_msg = self.msg
-        self.msg = ChatMessage(driver.find_element_by_class_name(
-            "chatMessage-main"))
 
-        # prevent recursion
-        if self.msg.user == config.get("Credentials", "uname"):
-            return
-        if self.last_msg != self.msg:
-            if self.msg.gmt_dt < self.gmt_dt:
-                return
+        elements = driver.find_elements_by_class_name(
+            "chatMessage-main")
+        for_later = []
 
-            log(self.msg.user + " " + self.msg.text)
+        # Iterate top down, to skim off the new messages
+        for elem in elements:
+            msg = ChatMessage(elem)
 
-            if self.msg.text[0] == "!":
-                tokens = self.msg.text.split()
+            # check if the message is old
+            if msg == self.last_msg:
+                break
+            # prevent recursion
+            if msg.user == config.get("Credentials", "uname"):
+                break
+            if msg.gmt_dt < self.gmt_dt:
+                break
+            # Save them for later, beacuse we want to process them backwards
+            # (as they happened in real time)
+            for_later.insert(0, msg)
+
+        if len(elements) > 0:
+            self.last_msg = ChatMessage(elements[0])
+
+        # Iterate through all of the new messages
+        for msg in for_later:
+            log(msg.user + " " + msg.text)
+
+            if msg.text[0] == "!":
+                tokens = msg.text.split()
                 n = len(tokens)
 
                 cmd = tokens[0][1:]
