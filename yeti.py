@@ -82,7 +82,7 @@ class ChatBot:
 
         # Iterate through all of the new messages
         for msg in for_later:
-            log(msg.user + " " + msg.text)
+            log(msg.user + ": " + msg.text)
 
             if msg.text[0] == "!":
                 tokens = msg.text.split()
