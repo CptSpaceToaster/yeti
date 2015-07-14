@@ -1,16 +1,21 @@
 #!/usr/bin/python3.4
-import configparser
 import datetime
+import json
 import random
+import os
 import pytz
 import time
 from tzlocal import get_localzone
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import UnexpectedAlertPresentException
 
-driver = webdriver.Firefox()
-config = configparser.ConfigParser()
-
+# firefox webdriver
+global driver
+# configuration values
+global cfg
+# adjacency matrix/dictionary read from the map.json
+global adj_map
 
 class ChatMessage:
     def __init__(self, element):
@@ -55,7 +60,7 @@ class ChatBot:
 
     def do_chat(self):
         global driver
-        global config
+        global cfg
 
         elements = driver.find_elements_by_class_name(
             "chatMessage-main")
@@ -69,7 +74,7 @@ class ChatBot:
             if msg == self.last_msg:
                 break
             # prevent recursion
-            if msg.user == config.get("Credentials", "uname"):
+            if msg.user == cfg["uname"]:
                 break
             if msg.gmt_dt < self.gmt_dt:
                 break
@@ -120,25 +125,43 @@ class ChatBot:
 
 
 def log(txt):
-    print(str("[" + time.strftime("%H:%M:%S")) + "] " + txt)
+    print("[{0}] {1}".format(time.strftime("%H:%M:%S"), txt))
 
 
 def init():
     global driver
-    global config
-    # TODO: Error if config is missing
+    global cfg
+    global adj_map
+
     log("Reading Config")
-    config.read("cfg.ini")
+    if os.path.isfile("cfg.json"):
+        with open("cfg.json", encoding="utf-8") as data_file:
+            cfg = json.loads(data_file.read())
+    else:
+        print("Error: cfg.json not found")
+        exit(1)
+
+    log("Initializing Map")
+    if os.path.isfile("map.json"):
+        with open("map.json", encoding="utf-8") as data_file:
+            adj_map = json.loads(data_file.read())
+        log("{0} Map locations loaded".format(len(adj_map)))
+    else:
+        print("Error: map.json not found")
+        exit(1)
+
     log("Connecting to Initium")
+    driver = webdriver.Firefox()
     driver.get("http://www.playinitium.com")
 
+    log("Logging in as {0}".format(cfg["uname"]))
     # Enter email
     login = driver.find_element_by_name("email")
-    login.send_keys(config.get("Credentials", "email"))
+    login.send_keys(cfg["email"])
 
     # Enter pw
     login = driver.find_element_by_name("password")
-    login.send_keys(config.get("Credentials", "pw"))
+    login.send_keys(cfg["pw"])
 
     for button in driver.find_elements_by_class_name("main-button"):
         if button.text == "Login":
@@ -155,10 +178,16 @@ if __name__ == "__main__":
             except NoSuchElementException:
                 # bot missed
                 log("Bot could not find chat entries")
+            except UnexpectedAlertPresentException:
+                print("Alerted")
 
             time.sleep(5)
-
-    except KeyboardInterrupt:
-        print("")
+    
+    except (ConnectionRefusedError, KeyboardInterrupt) as e:
+        if type(e) is KeyboardInterrupt:
+            print("")
+        if type(e) is ConnectionRefusedError:
+            log("Connection to the Firefox Webdriver was lost")
         log("Exiting")
         exit(0)
+

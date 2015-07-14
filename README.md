@@ -11,14 +11,15 @@ sudo pip3 install selenium pytz tzlocal
 ```
 
 ##Config File
-You will need a config in the directory you run the bot.  It must be named `cfg.ini`
+You will need a config in the directory you run the bot.  It must be named `cfg.json`
 
-Example `cfg.ini`
+Example `cfg.json`
 ```
-[Credentials]
-email: YourEmail@yourdomain.com
-uname: YourUsername
-pw:    YourPassword
+{
+    "email": "your-email@your.domain.com",
+    "uname": "YourUsername",
+    "pw": "YourPassword"
+}
 ```
 
 ##Running
