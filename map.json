@@ -2,9 +2,12 @@
     "Aera": {
         "Artius_River": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4505781470756864",
         "North_West_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6669355408424960",
-        "Town_Hall": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6650283874582528",
+        "Aera_Town_Hall": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6650283874582528",
         "Aera_Inn": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4676659160547328",
         "Aera_Countryside": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5707702298738688"
+    },
+    "Aera_Town_Hall": {
+        "Aera": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6650283874582528"
     },
     "Aera_Countryside": {
         "Wildeburn_Forest": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4645934038253568",
@@ -12,6 +15,9 @@
         "Giant_Turtle": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5635874238758912",
         "Northern_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6431438647853056",
         "Aera": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5707702298738688"
+    },
+    "Giant_Turtle": {
+        "Aera_Countryside": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5635874238758912"
     },
     "Aera_Swamplands": {
         "Grand_Mountain": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5644406560391168",
@@ -70,7 +76,7 @@
     },
     "Great_Northern_Valley": {
         "Northern_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=4896114809503744",
-        "Abandoned_Castle": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5702240174080000"
+        "Abandoned_Castle:_Under_construction": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5702240174080000"
     },
     "Abandoned_Castle:_Under_construction": {
         "Outer_Gate": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6617033848389632",
@@ -118,8 +124,8 @@
         "Artius_Lane": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6713435731525632"
     },
     "Artius_Lane": {
-        "Arius_River": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6713435731525632",
-        "Misty Forest": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5632100405346304"
+        "Artius_River": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6713435731525632",
+        "Misty_Forest": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5632100405346304"
     },
     "Misty_Forest": {
         "Artius_Lane": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5632100405346304",
@@ -150,13 +156,13 @@
         "A_Letter_To_The_Misty_Forest_Goblin_Leader": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5604915309182976"
     },
     "A_Letter_To_The_Misty_Forest_Goblin_Leader": {
-        "Leader's_Quarters:": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5604915309182976"
+        "Leader's_Quarters": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5604915309182976"
     },
     "North_West_Hills": {
-        "Area": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6669355408424960",
+        "Aera": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=6669355408424960",
         "The_Fork": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5398765569572864",
         "Canyonside_Plains": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5260299615600640",
-        "Baron_Crickton's_Lair": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5115156161888256"
+        "Baron_Cricketon's_Lair": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5115156161888256"
     },
     "Baron_Cricketon's_Lair": {
         "North_West_Hills": "http://www.playinitium.com/ServletCharacterControl?type=goto&pathId=5115156161888256"

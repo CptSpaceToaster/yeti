@@ -1,4 +1,5 @@
 #!/usr/bin/python3.4
+import initium_map
 import datetime
 import json
 import random
@@ -16,6 +17,7 @@ global driver
 global cfg
 # adjacency matrix/dictionary read from the map.json
 global adj_map
+
 
 class ChatMessage:
     def __init__(self, element):
@@ -146,6 +148,10 @@ def init():
         with open("map.json", encoding="utf-8") as data_file:
             adj_map = json.loads(data_file.read())
         log("{0} Map locations loaded".format(len(adj_map)))
+        err = initium_map.check("map.json")
+        if err:
+            exit(err)
+
     else:
         print("Error: map.json not found")
         exit(1)
@@ -174,15 +180,15 @@ if __name__ == "__main__":
         while True:
             try:
                 jabber.do_chat()
-                # Rate Limit
             except NoSuchElementException:
                 # bot missed
                 log("Bot could not find chat entries")
             except UnexpectedAlertPresentException:
                 print("Alerted")
 
+            # Rate Limit
             time.sleep(5)
-    
+
     except (ConnectionRefusedError, KeyboardInterrupt) as e:
         if type(e) is KeyboardInterrupt:
             print("")
@@ -190,4 +196,3 @@ if __name__ == "__main__":
             log("Connection to the Firefox Webdriver was lost")
         log("Exiting")
         exit(0)
-
