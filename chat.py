@@ -39,13 +39,12 @@ class ChatBot:
     def __init__(self):
         self.last_msg = None
 
-        share.log("Calculating Timezone")
+        share.log("Calculating timezone")
         self.tz = get_localzone()
         self.local_dt = self.tz.localize(datetime.datetime.now())
         # Send the bot back in time 1 minute, to detect lines on startup
         self.local_dt -= datetime.timedelta(minutes=1)
         self.gmt_dt = self.local_dt.astimezone(pytz.timezone("GMT"))
-        share.log("Initialized Chatbot")
 
     def do_chat(self):
         elements = share.driver.find_elements_by_class_name(

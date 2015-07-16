@@ -1,39 +1,17 @@
 #!/usr/bin/python3.4
-import initium_chat
-import initium_map
+import chat
 import share
-import json
-import os
 import time
-from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import UnexpectedAlertPresentException
 
 
 def init():
-    share.log("Reading Config")
-    if os.path.isfile("cfg.json"):
-        with open("cfg.json", encoding="utf-8") as data_file:
-            share.cfg = json.loads(data_file.read())
-    else:
-        print("Error: cfg.json not found")
-        exit(1)
-
-    share.log("Initializing Map")
-    if os.path.isfile("map.json"):
-        with open("map.json", encoding="utf-8") as data_file:
-            adj_map = json.loads(data_file.read())
-        share.log("{0} Map locations loaded".format(len(adj_map)))
-        err = initium_map.check("map.json")
-        if err:
-            exit(err)
-
-    else:
-        print("Error: map.json not found")
-        exit(1)
+    share.init_cfg()
+    share.init_world()
+    share.init_driver()
 
     share.log("Connecting to Initium")
-    share.driver = webdriver.Firefox()
     share.driver.get("http://www.playinitium.com")
 
     share.log("Logging in as {0}".format(share.cfg["uname"]))
@@ -53,7 +31,8 @@ def init():
 if __name__ == "__main__":
     try:
         init()
-        jabber = initium_chat.ChatBot()
+        share.log("Initializing chatbot")
+        jabber = chat.ChatBot()
         while True:
             try:
                 jabber.do_chat()
