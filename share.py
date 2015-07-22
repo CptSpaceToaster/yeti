@@ -4,6 +4,7 @@ import json
 import os
 import time
 from selenium import webdriver
+from pprint import pprint
 
 # adjacency matrix/dictionary read from the map.json
 world = []
@@ -18,8 +19,15 @@ class InitiumMap:
         log("Initializing {0}".format(file_loc))
         if os.path.isfile(file_loc):
             with open(file_loc, encoding="utf-8") as data_file:
-                self.adj_map = json.loads(data_file.read())
-            log("{0} Map locations loaded".format(len(self.adj_map)))
+                self.links = json.loads(data_file.read())
+                self.visited = {}
+                self.adj_map = {}
+                for key in self.links:
+                    self.visited[key] = False
+                    self.adj_map[key] = {}
+                    for k in self.links:
+                        self.adj_map[key][k] = ""
+            log("{0} Map locations loaded".format(len(self.links)))
         else:
             print("Error: {0} not found".format(file_loc))
 
@@ -31,8 +39,8 @@ class InitiumMap:
         # count each path... we should have an even number
         url_count = defaultdict(int)
         path_count = defaultdict(int)
-        for path in self.adj_map:
-            for adj, url in self.adj_map[path].items():
+        for path in self.links:
+            for adj, url in self.links[path].items():
                 url_count[url] += 1
                 path_count[path] += 1
                 path_count[adj] += 1
@@ -52,6 +60,36 @@ class InitiumMap:
                 error_status += 1
 
         return error_status
+
+    def solve(self):
+        log("Attempting Solve")
+        self.explore([], "Aera")
+        log("Solved")
+
+    def explore(self, parents, node):
+        self.visited[node] = True
+        all_children = []
+
+        for adj in self.links[node]:
+            # print("adj: " + adj)
+            if not self.visited.get(adj, False):
+                # print("forking to " + adj)
+                children = self.explore(parents + [node],
+                                        adj)[len(parents) + 1:]
+                for child in children:
+                    self.adj_map[node][child] = adj
+
+                all_children += children
+
+        self.adj_map[node][node] = node
+
+        # print("returning: ")
+        # pprint(parents + [node] + all_children)
+        for key in self.adj_map[node]:
+            if self.adj_map[node][key] == "":
+                if len(parents) > 0:
+                    self.adj_map[node][key] = parents[-1]
+        return parents + [node] + all_children
 
 
 def log(txt):
@@ -86,3 +124,5 @@ def init_driver():
 
 if __name__ == "__main__":
     init_world()
+    world.solve()
+    pprint(world.adj_map)
