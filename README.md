@@ -36,9 +36,9 @@ If you want to fork the bot's logged messages to a slack incoming webhook, you w
     "uname": "YourUsername",
     "pw": "YourPassword",
     "slack_url": "https://hooks.slack.com/services/your/secret/token",
-    "channel": "#channel-name",
-    "username": "Username",
-    "icon_emoji": ":ghost:"
+    "slack_channel": "#channel-name",
+    "slack_username": "Username",
+    "slack_icon_emoji": ":ghost:"
 }
 ```
 

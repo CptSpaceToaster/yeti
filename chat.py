@@ -113,10 +113,10 @@ class ChatBot:
 
 def slack_msg(txt):
     if share.args.slack_enabled:
-        payload = {'channel': share.cfg["channel"],
-                   'username': share.cfg["username"],
+        payload = {'channel': share.cfg["slack_channel"],
+                   'username': share.cfg["slack_username"],
                    'text': txt,
-                   'icon_emoji': share.cfg["icon_emoji"]
+                   'icon_emoji': share.cfg["slack_icon_emoji"]
                    }
         headers = {'content-type': 'application/json'}
         r = requests.post(share.cfg["slack_url"], data=json.dumps(payload), headers=headers)
