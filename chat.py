@@ -1,8 +1,10 @@
 #!/usr/bin/python3.4
 import datetime
+import json
 import share
 import pytz
 import random
+import requests
 from tzlocal import get_localzone
 
 
@@ -73,6 +75,7 @@ class ChatBot:
         # Iterate through all of the new messages
         for msg in for_later:
             share.log(msg.user + ": " + msg.text)
+            slack_msg(msg.user + ": " + msg.text)
 
             if msg.text[0] == "!":
                 tokens = msg.text.split()
@@ -106,3 +109,15 @@ class ChatBot:
         chat = share.driver.find_element_by_id("chat_input")
         chat.send_keys(text)
         chat.submit()
+
+
+def slack_msg(txt):
+    payload = {'channel': '#gamechat-aera',
+               'username': 'Lemon',
+               'text': txt,
+               'icon_emoji': ':lemon:'
+               }
+    headers = {'content-type': 'application/json'}
+    r = requests.post(share.cfg["slack_url"], data=json.dumps(payload), headers=headers)
+    if r.status_code != 200:
+        share.log("Error: " + r.status_code + " " + r.reason + " - " + r.text)
