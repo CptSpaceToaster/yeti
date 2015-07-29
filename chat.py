@@ -75,7 +75,7 @@ class ChatBot:
         # Iterate through all of the new messages
         for msg in for_later:
             share.log(msg.user + ": " + msg.text)
-            slack_msg(msg.user + ": " + msg.text)
+            slack_msg("*" + msg.user + "*: " + msg.text)
 
             if msg.text[0] == "!":
                 tokens = msg.text.split()
@@ -112,12 +112,13 @@ class ChatBot:
 
 
 def slack_msg(txt):
-    payload = {'channel': '#gamechat-aera',
-               'username': 'Lemon',
-               'text': txt,
-               'icon_emoji': ':lemon:'
-               }
-    headers = {'content-type': 'application/json'}
-    r = requests.post(share.cfg["slack_url"], data=json.dumps(payload), headers=headers)
-    if r.status_code != 200:
-        share.log("Error: " + r.status_code + " " + r.reason + " - " + r.text)
+    if share.args.slack_enabled:
+        payload = {'channel': share.cfg["channel"],
+                   'username': share.cfg["username"],
+                   'text': txt,
+                   'icon_emoji': share.cfg["icon_emoji"]
+                   }
+        headers = {'content-type': 'application/json'}
+        r = requests.post(share.cfg["slack_url"], data=json.dumps(payload), headers=headers)
+        if r.status_code != 200:
+            share.log("Error: " + r.status_code + " " + r.reason + " - " + r.text)

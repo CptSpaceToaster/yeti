@@ -32,6 +32,8 @@ if __name__ == "__main__":
     try:
         init()
         share.log("Initializing chatbot")
+        if share.args.slack_enabled:
+            share.log("Slack is enabled")
         jabber = chat.ChatBot()
         while True:
             try:

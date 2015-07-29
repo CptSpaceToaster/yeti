@@ -1,10 +1,17 @@
 #!/usr/bin/python3.4
+import argparse
 from collections import defaultdict
 import json
 import os
 import time
 from selenium import webdriver
 from pprint import pprint
+
+parser = argparse.ArgumentParser(description="Yeti - A Python based bot for Initium - http://playinitium.com")
+parser.add_argument("-s", "--slack", dest="slack_enabled", action="store_true",
+                    help="Fork all of the logged messages to a slack incoming webhook (default=false)")
+args = parser.parse_args()
+
 
 # adjacency matrix/dictionary read from the map.json
 world = []
