@@ -10,6 +10,8 @@ from pprint import pprint
 parser = argparse.ArgumentParser(description="Yeti - A Python based bot for Initium - http://playinitium.com")
 parser.add_argument("-s", "--slack", dest="slack_enabled", action="store_true",
                     help="Fork all of the logged messages to a slack incoming webhook (default=false)")
+parser.add_argument("-c", "--config", dest="config_file", default="cfg.json",
+                    help="Configuration to use (default=cfg.json)")
 args = parser.parse_args()
 
 
@@ -107,11 +109,11 @@ def init_cfg():
     global cfg
 
     log("Reading Config")
-    if os.path.isfile("cfg.json"):
-        with open("cfg.json", encoding="utf-8") as data_file:
+    if os.path.isfile(args.config_file):
+        with open(args.config_file, encoding="utf-8") as data_file:
             cfg = json.loads(data_file.read())
     else:
-        print("Error: cfg.json not found")
+        print("Error: " + args.config_file + " not found")
         exit(1)
 
 
