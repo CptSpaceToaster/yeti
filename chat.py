@@ -121,4 +121,4 @@ def slack_msg(usr, txt):
         headers = {'content-type': 'application/json'}
         r = requests.post(share.cfg["slack_url"], data=json.dumps(payload), headers=headers)
         if r.status_code != 200:
-            share.log("Error: " + r.status_code + " " + r.reason + " - " + r.text)
+            share.log("Error: " + str(r.status_code) + " " + r.reason + " - " + r.text)
