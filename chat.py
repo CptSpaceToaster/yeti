@@ -75,7 +75,7 @@ class ChatBot:
         # Iterate through all of the new messages
         for msg in for_later:
             share.log(msg.user + ": " + msg.text)
-            slack_msg("*" + msg.user + "*: " + msg.text)
+            slack_msg(msg.user, msg.text)
 
             if msg.text[0] == "!":
                 tokens = msg.text.split()
@@ -111,10 +111,10 @@ class ChatBot:
         chat.submit()
 
 
-def slack_msg(txt):
+def slack_msg(usr, txt):
     if share.args.slack_enabled:
         payload = {'channel': share.cfg["slack_channel"],
-                   'username': share.cfg["slack_username"],
+                   'username': usr,
                    'text': txt,
                    'icon_emoji': share.cfg["slack_icon_emoji"]
                    }
