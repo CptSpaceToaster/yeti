@@ -74,20 +74,22 @@ class ChatBot:
 
         # Iterate through all of the new messages
         for msg in for_later:
-            share.log(msg.user + ": " + msg.text)
-            slack_msg(msg.user, msg.text)
+            # Check to see if the message has content
+            if msg.text:
+                share.log(msg.user + ": " + msg.text)
+                slack_msg(msg.user, msg.text)
 
-            if msg.text[0] == "!":
-                tokens = msg.text.split()
-                n = len(tokens)
+                if msg.text[0] == "!":
+                    tokens = msg.text.split()
+                    n = len(tokens)
 
-                cmd = tokens[0][1:]
-                if n > 1:
-                    args = tokens[1:]
-                else:
-                    args = []
+                    cmd = tokens[0][1:]
+                    if n > 1:
+                        args = tokens[1:]
+                    else:
+                        args = []
 
-                self.handle(cmd, args, n)
+                    self.handle(cmd, args, n)
 
     def handle(self, cmd, args, n):
         if cmd == "help":
