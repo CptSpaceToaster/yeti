@@ -10,22 +10,29 @@ from tzlocal import get_localzone
 
 class ChatMessage:
     def __init__(self, element):
-        # Date Parser
-        date = element.find_element_by_class_name("chatMessage-time") \
-            .get_attribute("title")
+        # Attempt to parse the timestamp from the element, and convert it to GMT
+        # Get the message time Title
+        date = element.find_element_by_class_name("chatMessage-time").get_attribute("title")
+        # Append the text from that element, to form a date-string
         date += element.find_element_by_class_name("chatMessage-time").text
+        # Parse the date-string into a datetime object
         self.gmt_dt = datetime.datetime.strptime(date, "%A, %B %d, %Y[%H:%M]")
+        # set the datetime object to GMT
         self.gmt_dt = pytz.timezone("GMT").localize(self.gmt_dt)
 
+        # Obtain the Username and Text from the message-text
         elems = element.find_elements_by_class_name("chatMessage-text")
+        # If we have more than one element, username and text were combined (usually when the user typed /me [text]
         if len(elems) > 1:
             self.user = elems[0].text
             self.text = elems[1].text
+        # Otherwise, the message-text and username are separated nicely
         else:
             self.text = elems[0].text
             self.user = element.find_element_by_class_name(
                 "chatMessage-nickname").text
 
+    # Define behavior for equivalence
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             return self.gmt_dt == other.gmt_dt and self.user == other.user \
@@ -42,10 +49,12 @@ class ChatBot:
         self.last_msg = None
 
         share.log("Calculating timezone")
+        # Set current time to whatever the system time is
         self.tz = get_localzone()
         self.local_dt = self.tz.localize(datetime.datetime.now())
         # Send the bot back in time 1 minute, to detect lines on startup
         self.local_dt -= datetime.timedelta(minutes=1)
+        # Convert to GMT
         self.gmt_dt = self.local_dt.astimezone(pytz.timezone("GMT"))
 
     def do_chat(self):
@@ -94,6 +103,7 @@ class ChatBot:
                     self.handle(cmd, args, n)
 
     def handle(self, cmd, args, n):
+        # Handle a couple of basic commands
         if cmd == "help":
             self.respond("Available commands: help, bot-say [TEXT], \
                     roll [NUM]")
@@ -110,19 +120,26 @@ class ChatBot:
                 self.respond("Error: Roll needs an Positive Integer Argument")
 
     def respond(self, text):
+        # Enter text in the chat box, and hit enter!
         chat = share.driver.find_element_by_id("chat_input")
         chat.send_keys(text)
         chat.submit()
 
 
 def slack_msg(usr, txt):
+    # Post a message to slack (if it's enabled at startup with --slack)
     if share.args.slack_enabled:
+        # Create the content we want to send to slack, via incoming webhook
         payload = {'channel': share.cfg["slack_channel"],
                    'username': usr,
                    'text': txt,
                    'icon_emoji': share.cfg["slack_icon_emoji"]
                    }
+
+        # Slack accepts json payloads
         headers = {'content-type': 'application/json'}
+
+        # shipit.jpg
         r = requests.post(share.cfg["slack_url"], data=json.dumps(payload), headers=headers)
         if r.status_code != 200:
             share.log("Error: " + str(r.status_code) + " " + r.reason + " - " + r.text)
