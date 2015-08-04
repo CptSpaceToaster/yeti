@@ -35,6 +35,10 @@ if __name__ == "__main__":
         if share.args.slack_enabled:
             share.log("Slack is enabled")
         jabber = chat.ChatBot()
+
+        share.log("Current Location: " + share.get_loc())
+        share.log("        Dogecoin: " + share.get_doge())
+
         while True:
             try:
                 jabber.do_chat()

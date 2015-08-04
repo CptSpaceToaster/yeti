@@ -101,6 +101,22 @@ class InitiumMap:
         return parents + [node] + all_children
 
 
+def get_loc():
+    elem = driver.find_element_by_class_name("header-location")
+    if elem:
+        if elem.text:
+            return elem.text
+
+
+def get_doge():
+    elem = driver.find_element_by_class_name("header-stats")
+    if elem:
+        if elem.text:
+            stats = elem.text.split()
+            if len(stats) > 1:
+                return stats[1]
+
+
 def log(txt):
     print("[{0}] {1}".format(time.strftime("%H:%M:%S"), txt))
 
