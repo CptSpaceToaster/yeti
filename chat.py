@@ -57,18 +57,20 @@ class ChatBot:
         for elem in elements:
             msg = ChatMessage(elem)
 
-            # check if the message is old
+            # check if we've seen this message before
             if msg == self.last_msg:
                 break
             # prevent recursion
             if msg.user == share.cfg["uname"]:
                 break
+            # check to see if the message is new, compared when the bot was initialized
             if msg.gmt_dt < self.gmt_dt:
                 break
             # Save them for later, beacuse we want to process them backwards
             # (as they happened in real time)
             for_later.insert(0, msg)
 
+        # keep track of the last parsed message, and use it as a "stopping point"
         if len(elements) > 0:
             self.last_msg = ChatMessage(elements[0])
 
