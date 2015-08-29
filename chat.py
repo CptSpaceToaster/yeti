@@ -1,10 +1,8 @@
 #!/usr/bin/python3.4
 import datetime
-import json
 import share
 import pytz
 import random
-import requests
 from tzlocal import get_localzone
 
 
@@ -88,7 +86,6 @@ class ChatBot:
             # Check to see if the message has content
             if msg.text:
                 share.log(msg.user + ": " + msg.text)
-                slack_msg(msg.user, msg.text)
 
                 if msg.text[0] == "!":
                     tokens = msg.text.split()
@@ -124,22 +121,3 @@ class ChatBot:
         chat = share.driver.find_element_by_id("chat_input")
         chat.send_keys(text)
         chat.submit()
-
-
-def slack_msg(usr, txt):
-    # Post a message to slack (if it's enabled at startup with --slack)
-    if share.args.slack_enabled:
-        # Create the content we want to send to slack, via incoming webhook
-        payload = {'channel': share.cfg["slack_channel"],
-                   'username': usr,
-                   'text': txt,
-                   'icon_emoji': share.cfg["slack_icon_emoji"]
-                   }
-
-        # Slack accepts json payloads
-        headers = {'content-type': 'application/json'}
-
-        # shipit.jpg
-        r = requests.post(share.cfg["slack_url"], data=json.dumps(payload), headers=headers)
-        if r.status_code != 200:
-            share.log("Error: " + str(r.status_code) + " " + r.reason + " - " + r.text)

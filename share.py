@@ -6,12 +6,13 @@ import os
 import time
 from selenium import webdriver
 from pprint import pprint
+from selenium.common.exceptions import NoSuchElementException
 
 parser = argparse.ArgumentParser(description="Yeti - A Python based bot for Initium - http://playinitium.com")
-parser.add_argument("-s", "--slack", dest="slack_enabled", action="store_true",
-                    help="Fork all of the logged messages to a slack incoming webhook (default=false)")
 parser.add_argument("-c", "--config", dest="config_file", default="cfg.json",
                     help="Configuration to use (default=cfg.json)")
+parser.add_argument("-d", "--do_chat", dest="do_chat", action="store_true",
+                    help="Handle commands in each rooms local chat")
 args = parser.parse_args()
 
 
@@ -102,10 +103,14 @@ class InitiumMap:
 
 
 def get_loc():
-    elem = driver.find_element_by_class_name("header-location")
-    if elem:
-        if elem.text:
-            return elem.text
+    try:
+        elem = driver.find_element_by_class_name("header-location")
+        if elem:
+            if elem.text:
+                return elem.text
+    except NoSuchElementException:
+        # Not found
+        pass
 
 
 def get_doge():

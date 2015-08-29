@@ -2,6 +2,7 @@
 import chat
 import share
 import time
+import sys
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import UnexpectedAlertPresentException
 
@@ -32,24 +33,33 @@ if __name__ == "__main__":
     try:
         init()
         share.log("Initializing chatbot")
-        if share.args.slack_enabled:
-            share.log("Slack is enabled")
         jabber = chat.ChatBot()
 
         share.log("Current Location: " + share.get_loc())
         share.log("        Dogecoin: " + share.get_doge())
 
-        while True:
-            try:
-                jabber.do_chat()
-            except NoSuchElementException:
-                # bot missed
-                share.log("Bot could not find chat entries")
-            except UnexpectedAlertPresentException:
-                print("Alerted")
+        count = 0
 
-            # Rate Limit
-            time.sleep(5)
+        while True:
+            if share.args.do_chat:
+                try:
+                    jabber.do_chat()
+                    # Rate Limit
+                    time.sleep(5)
+                except NoSuchElementException:
+                    # bot missed
+                    share.log("Bot could not find chat entries")
+                except UnexpectedAlertPresentException:
+                    print("Alerted")
+
+            if share.get_loc() == 'Aera Inn Basement - South':
+                buttons = share.driver.find_elements_by_class_name("main-button")
+                for button in buttons:
+                    if '(E)' in button.text:
+                        count += 1
+                        button.click()
+                        break
+            time.sleep(1)
 
     except (ConnectionRefusedError, KeyboardInterrupt) as e:
         if type(e) is KeyboardInterrupt:
@@ -57,4 +67,5 @@ if __name__ == "__main__":
         if type(e) is ConnectionRefusedError:
             share.log("Connection to the Firefox Webdriver was lost")
         share.log("Exiting")
-        exit(0)
+        share.log('Number of times explore was pressed: ' + str(count))
+        sys.exit(0)
