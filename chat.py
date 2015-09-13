@@ -1,6 +1,5 @@
 #!/usr/bin/python3.4
 import datetime
-import share
 import pytz
 import random
 from tzlocal import get_localzone
@@ -43,10 +42,12 @@ class ChatMessage:
 
 
 class ChatBot:
-    def __init__(self):
+    def __init__(self, driver, uname):
+        self.driver = driver
+        self.uname = uname
         self.last_msg = None
 
-        share.log("Calculating timezone")
+        print("Calculating timezone")
         # Set current time to whatever the system time is
         self.tz = get_localzone()
         self.local_dt = self.tz.localize(datetime.datetime.now())
@@ -56,7 +57,7 @@ class ChatBot:
         self.gmt_dt = self.local_dt.astimezone(pytz.timezone("GMT"))
 
     def do_chat(self):
-        elements = share.driver.find_elements_by_class_name(
+        elements = self.driver.find_elements_by_class_name(
             "chatMessage-main")
         for_later = []
 
@@ -68,7 +69,7 @@ class ChatBot:
             if msg == self.last_msg:
                 break
             # prevent recursion
-            if msg.user == share.cfg["uname"]:
+            if msg.user == self.uname:
                 break
             # check to see if the message is new, compared when the bot was initialized
             if msg.gmt_dt < self.gmt_dt:
@@ -85,7 +86,7 @@ class ChatBot:
         for msg in for_later:
             # Check to see if the message has content
             if msg.text:
-                share.log(msg.user + ": " + msg.text)
+                print(msg.user + ": " + msg.text)
 
                 if msg.text[0] == "!":
                     tokens = msg.text.split()
@@ -118,6 +119,6 @@ class ChatBot:
 
     def respond(self, text):
         # Enter text in the chat box, and hit enter!
-        chat = share.driver.find_element_by_id("chat_input")
+        chat = self.driver.find_element_by_id("chat_input")
         chat.send_keys(text)
         chat.submit()
