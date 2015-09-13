@@ -4,41 +4,41 @@ import argparse
 import sys
 import os
 import json
-from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import UnexpectedAlertPresentException
 # Local
 import chat
 import world
+import initium
 
 
-class Yeti():
+class Yeti(initium.webdriver):
     def __init__(self):
         self.cfg = self._parse_config()
         self.world = world.InitiumMap(self.args.map_file)
-        # share.init_world()
 
         print("Initializing webdriver")
-        self.driver = webdriver.Firefox()
+        # Hax
+        super().__init__()
 
         print("Connecting to Initium")
-        self.driver.get("http://www.playinitium.com")
+        self.get("http://www.playinitium.com")
 
         print("Logging in as {0}".format(self.cfg["uname"]))
         # Enter email
-        printin = self.driver.find_element_by_name("email")
-        printin.send_keys(self.cfg["email"])
+        login = self.find_element_by_name("email")
+        login.send_keys(self.cfg["email"])
 
         # Enter pw
-        printin = self.driver.find_element_by_name("password")
-        printin.send_keys(self.cfg["pw"])
+        login = self.find_element_by_name("password")
+        login.send_keys(self.cfg["pw"])
 
-        for button in self.driver.find_elements_by_class_name(
+        for button in self.find_elements_by_class_name(
                 "main-button"):
             if button.text == "Login":
                 button.click()
 
-        self.chat_helper = chat.ChatBot(self.driver, self.cfg['uname'])
+        self.chat_helper = chat.ChatBot(self, self.cfg['uname'])
 
     def _parse_config(self):
         print('Parsing command line arguments')
@@ -59,32 +59,14 @@ class Yeti():
             print("Error: Config: {0} not found".format(self.args.config_file))
             sys.exit(1)
 
-    def get_loc(self):
-        try:
-            elem = self.driver.find_element_by_class_name("header-location")
-            if elem:
-                if elem.text:
-                    return elem.text
-        except NoSuchElementException:
-            # Not found
-            pass
-
-    def get_doge(self):
-        elem = self.driver.find_element_by_class_name("header-stats")
-        if elem:
-            if elem.text:
-                stats = elem.text.split()
-                if len(stats) > 1:
-                    return stats[1]
-
 
 if __name__ == "__main__":
     try:
         Y = Yeti()
         print("Initializing chatbot")
 
-        print("Current Location: " + Y.get_loc())
-        print("        Dogecoin: " + Y.get_doge())
+        print("Current Location: " + Y.get_location())
+        print("        Dogecoin: " + Y.get_gold())
 
         while True:
             if Y.args.do_chat:
@@ -98,7 +80,7 @@ if __name__ == "__main__":
 
             """
             if Y.get_loc() == 'Aera Inn Basement - South':
-                buttons = Y.driver.find_elements_by_class_name("main-button")
+                buttons = Y.find_elements_by_class_name("main-button")
                 for button in buttons:
                     if '(E)' in button.text:
                         count += 1
