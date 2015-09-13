@@ -1,11 +1,12 @@
 #!/usr/bin/python3.4
 from collections import defaultdict
 import json
+import sys
 import os
 
 
 class InitiumMap:
-    def __init__(self, file_loc):
+    def __init__(self, file_loc, start='Aera'):
         print('Initializing {0}'.format(file_loc))
         if os.path.isfile(file_loc):
             with open(file_loc, encoding='utf-8') as data_file:
@@ -13,13 +14,19 @@ class InitiumMap:
                 self.visited = {}
                 self.adj_map = {}
                 self.world = {}
-                for key in self.links:
-                    self.visited[key] = False
-                    self.adj_map[key] = {}
-                    for k in self.links:
-                        self.adj_map[key][k] = ''
+                for loc_1 in self.links:
+                    self.visited[loc_1] = False
+                    self.adj_map[loc_1] = {}
+                    for loc_2 in self.links:
+                        self.adj_map[loc_1][loc_2] = {}
             print('{0} Map locations loaded'.format(len(self.links)))
-            self._solve()
+            print('Attempting Solve')
+            err = self.check()
+            if err:
+                sys.exit(err)
+            self.explore([], start)
+            print('Solved')
+
         else:
             print('Error: {0} not found'.format(file_loc))
 
@@ -52,38 +59,46 @@ class InitiumMap:
 
         return error_status
 
-    def _solve(self):
-        print('Attempting Solve')
-        self.explore([], 'Aera')
-        print('Solved')
-
-    def explore(self, parents, node):
+    def explore(self, parents, node, generation=0):
         self.visited[node] = True
         all_children = []
 
+        # loop to all adjacent paths
         for adj in self.links[node]:
             # print('adj: ' + adj)
-            if not self.visited.get(adj, False):
+            # check to see if we've been there before
+            # and if we HAVE been there before, then check the generation
+            if not self.visited.get(adj, False) or generation < self.adj_map[adj][adj].get('gen', 0):
                 # print('forking to ' + adj)
-                children = self.explore(parents + [node], adj)[len(parents) + 1:]
+                # recurse to a child
+                children = self.explore(parents + [node], adj, generation+1)[len(parents) + 1:]
+                # loop through return'ed list of children nodes
                 for child in children:
-                    self.adj_map[node][child] = adj
+                    # the path from myself to a child must use the 'adj' token we're looking at
+                    self.adj_map[node][child]['path'] = adj
 
                 all_children += children
 
-        self.adj_map[node][node] = node
+        # the path from myself to myself is me ._.
+        self.adj_map[node][node]['path'] = node
+        self.adj_map[node][node]['gen'] = generation
 
         # print('returning: ')
         # pprint(parents + [node] + all_children)
-        for key in self.adj_map[node]:
-            if self.adj_map[node][key] == '':
-                if len(parents) > 0:
-                    self.adj_map[node][key] = parents[-1]
+        # loop through the adjacency map at our current location
+        for known_adj in self.adj_map[node]:
+            # if the path from myself to the entry in the adjacency map is empty
+            # and we have a known parent
+            if self.adj_map[node][known_adj].get('path', '') == '' and len(parents) > 0:
+                # the path from myself to the empty adj_node must include the last parent
+                self.adj_map[node][known_adj]['path'] = parents[-1]
+
+        # Return a list of nodes as-per the generation they were encountered
         return parents + [node] + all_children
 
 
 if __name__ == '__main__':
     from pprint import pprint
 
-    map = InitiumMap('map.json')
+    map = InitiumMap('map-loop.json', '5')
     pprint(map.adj_map)
