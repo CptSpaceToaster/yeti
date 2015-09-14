@@ -18,6 +18,7 @@ class InitiumMap:
                     for loc_2 in self.links:
                         self.adj_map[loc_1][loc_2] = {}
                     self.adj_map[loc_1][loc_1]['path'] = loc_1
+                    self.adj_map[loc_1][loc_1]['gen'] = 0
                     # self.adj_map[loc_1][loc_1]['gen'] = 999999
             print('{0} Map locations loaded'.format(len(self.links)))
             print('Attempting Solve')
@@ -61,6 +62,7 @@ class InitiumMap:
 
     def _solve(self):
         # for node in self.adj_map:
+        pprint(self.links)
         self._explore('5', '5')
 
     def _explore(self, parent, node, history=[], generation=0):
@@ -69,24 +71,38 @@ class InitiumMap:
             return []
         print('Entering: {0}'.format(node))
 
-        self.adj_map[parent][node]['gen'] = generation
+        # self.adj_map[parent][node]['gen'] = generation
+
+        all_ancestors = []
 
         # loop through the adjacent nodes
         for adj_node in self.links[node]:
-            # Check the generation value to see if we should walk in that direction
-            if generation < self.adj_map[parent][adj_node].get('gen', 999999):
-                # print('Forking into: {0}'.format(adj_node))
-                ancestors = self._explore(parent, adj_node, history + [node], generation+1)
-                print('At: {0}    Ancestors: {1}'.format(adj_node, ancestors))
+            # print('HANDELING: {0} on generation: {1}'.format(adj_node, generation))
+            # Check to see if we've visited the adj_node before
+            if adj_node in history:
+                continue
 
-                for ancestor in ancestors:
-                    self.adj_map[adj_node][ancestor]['path'] = ancestors[0]
-                    pass
+            ancestors, children = self._explore(parent, adj_node, [node] + history, generation+1)
+            # children, ancestors = self._explore(parent, adj_node, history + [node], generation+1)
+
+            print('At: {0}    Ancestors: {1}'.format(adj_node, ancestors))
+            print('At: {0}    Children: {1}'.format(adj_node, children))
+
+            for child in children:
+                # self.adj_map[adj_node][child]['path'] = children[0]
+                # self.adj_map[adj_node][child]['gen'] = generation
+                pass
+
+            for ancestor in ancestors:
+                self.adj_map[adj_node][ancestor]['path'] = ancestors[0]
+                self.adj_map[adj_node][ancestor]['gen'] = generation
+                if ancestor not in all_ancestors:
+                    all_ancestors.append(child)
 
             # self.adj_map[parent][node]['path'] = parent
             # self.adj_map[parent][node]['gen'] = generation
         print()
-        return history + [node]
+        return [node] + all_ancestors, history
 
 
 if __name__ == '__main__':
