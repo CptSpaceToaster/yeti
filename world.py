@@ -5,6 +5,31 @@ import sys
 import os
 
 
+class Node():
+    def __init__(self, name, generation, adjacent=[]):
+        self.name = name
+        self.generation = generation
+        
+        # immediatly adjacent nodes
+        self.adjacent = adjacent
+		
+        # structure to hold instructions to get to any node from this one
+        self.route = {}
+		
+		# the path to myself from myself is me!
+		self.route[name] = name
+		
+		for adj_node in self.adjacent:
+		    # mark the adjacent nodes
+		    self.route[adj_node] = adj_node
+
+    def add_route(self, adj_node, to_node):
+        if adj_node not in self.adjacent:
+            # we have a problem ._.
+            print('Error: {0} is not an adjacent node in {1}'.format(adj_node, self.name))
+        self.route[to_node] = adj_node
+
+
 class InitiumMap:
     def __init__(self, file_loc, start='Aera'):
         print('Initializing {0}'.format(file_loc))
@@ -14,12 +39,16 @@ class InitiumMap:
                 self.adj_map = {}
                 self.world = {}
                 for loc_1 in self.links:
-                    self.adj_map[loc_1] = {}
+					# TODO: Implement a dictionary/list of Nodes
+					"""
+					Node(loc_1, 0, self.links[loc_1].keys())
+                    
                     for loc_2 in self.links:
                         self.adj_map[loc_1][loc_2] = {}
                     self.adj_map[loc_1][loc_1]['path'] = loc_1
                     self.adj_map[loc_1][loc_1]['gen'] = 0
                     # self.adj_map[loc_1][loc_1]['gen'] = 999999
+					"""
             print('{0} Map locations loaded'.format(len(self.links)))
             print('Attempting Solve')
             err = self.check()
@@ -62,8 +91,8 @@ class InitiumMap:
 
     def _solve(self):
         # for node in self.adj_map:
-        pprint(self.links)
-        self._explore('5', '5')
+        pprint(self.links['5'].keys())
+        # self._explore('5', '5')
 
     def _explore(self, parent, node, history=[], generation=0):
         # Check to see if we've been here before indicated by node appearing in 'history' (nodes MUST have unique names)
@@ -89,15 +118,16 @@ class InitiumMap:
             print('At: {0}    Children: {1}'.format(adj_node, children))
 
             for child in children:
-                # self.adj_map[adj_node][child]['path'] = children[0]
-                # self.adj_map[adj_node][child]['gen'] = generation
+                self.adj_map[node][child]['path'] = adj_node
+                self.adj_map[node][child]['gen'] = generation
                 pass
 
             for ancestor in ancestors:
-                self.adj_map[adj_node][ancestor]['path'] = ancestors[0]
-                self.adj_map[adj_node][ancestor]['gen'] = generation
-                if ancestor not in all_ancestors:
-                    all_ancestors.append(child)
+                # self.adj_map[adj_node][ancestor]['path'] = ancestors[0]
+                # self.adj_map[adj_node][ancestor]['gen'] = generation
+                # if ancestor not in all_ancestors:
+                # all_ancestors.append(child)
+                pass
 
             # self.adj_map[parent][node]['path'] = parent
             # self.adj_map[parent][node]['gen'] = generation
@@ -109,7 +139,7 @@ if __name__ == '__main__':
     from pprint import pprint
 
     imap = InitiumMap('map-loop.json')
-    pprint(imap.adj_map)
+    # pprint(imap.adj_map)
 
     for node in imap.adj_map:
         pass
