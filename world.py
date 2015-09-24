@@ -9,19 +9,19 @@ class Node():
     def __init__(self, name, generation, adjacent=[]):
         self.name = name
         self.generation = generation
-        
+
         # immediatly adjacent nodes
         self.adjacent = adjacent
-		
+
         # structure to hold instructions to get to any node from this one
         self.route = {}
-		
-		# the path to myself from myself is me!
-		self.route[name] = name
-		
-		for adj_node in self.adjacent:
-		    # mark the adjacent nodes
-		    self.route[adj_node] = adj_node
+
+        # the path to myself from myself is me!
+        self.route[name] = name
+
+        for adj_node in self.adjacent:
+            # mark the adjacent nodes
+            self.route[adj_node] = adj_node
 
     def add_route(self, adj_node, to_node):
         if adj_node not in self.adjacent:
@@ -39,16 +39,16 @@ class InitiumMap:
                 self.adj_map = {}
                 self.world = {}
                 for loc_1 in self.links:
-					# TODO: Implement a dictionary/list of Nodes
-					"""
-					Node(loc_1, 0, self.links[loc_1].keys())
-                    
+                    # TODO: Implement a dictionary/list of Nodes
+                    """
+                    Node(loc_1, 0, self.links[loc_1].keys())
+
                     for loc_2 in self.links:
                         self.adj_map[loc_1][loc_2] = {}
                     self.adj_map[loc_1][loc_1]['path'] = loc_1
                     self.adj_map[loc_1][loc_1]['gen'] = 0
                     # self.adj_map[loc_1][loc_1]['gen'] = 999999
-					"""
+                    """
             print('{0} Map locations loaded'.format(len(self.links)))
             print('Attempting Solve')
             err = self.check()
