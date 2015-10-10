@@ -1,3 +1,17 @@
-__pycache__
-cfg*.json
+# Temporary/Marker Files
 *.swp
+*.log
+*__pycache__*
+*~
+.requirements.txt
+
+# Automatically Generated Configuration Files
+project.mk
+
+# Untracked Configuration Files
+cfg*.json
+
+# Uneeded Directories
+docs/pdf
+venv
+logs
